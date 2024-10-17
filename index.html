@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Impacts of Pollution on Pollinators</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            color: #333;
+            overflow-y: auto;
+            min-height: 100vh;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            color: rgb(245, 241, 241);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #f39c12;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            color: #34495e;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-left: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            line-height: 1.5rem;
+        }
+
+        /* Header Section */
+        header {
+            background: url('/Image6.jpg') center center/cover;
+            color: #fff;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+            background-size: cover;
+        }
+        
+        header h1 {
+            font-size: 4rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f39c12;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 3rem 0;
+            background-color: #fff;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        .container img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            transition: all 0.4s ease-in-out;
+        }
+
+        .container img:hover {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        /* Pollinator Facts Button */
+        #pollinator-facts button {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: block;
+            margin: 2rem auto;
+        }
+
+        #pollinator-facts button:hover {
+            background-color: #e67e22;
+            transform: scale(1.1);
+        }
+
+        #fact-display p {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-style: italic;
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #34495e;
+            color: #fff;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 1rem;
+        }
+
+        /* Login and Registration Pages */
+        .login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('/Image.jpg') no-repeat center center/cover; 
+            /* background-color: #ecf0f1; */
+        }
+
+        .login-form,
+        .registration-form {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .login-form input,
+        .registration-form input {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .login-form button,
+        .registration-form button {
+            width: 100%;
+            padding: 1rem;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-form button:hover,
+        .registration-form button:hover {
+            background-color: #e67e22;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            header p {
+                font-size: 1.2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            #pollinator-facts button {
+                width: 100%;
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Login Page -->
+    <div class="login-page" id="login-page">
+        <div class="login-form">
+            <h2>Login</h2>
+            <input type="text" placeholder="Username">
+            <input type="password" placeholder="Password">
+            <button onclick="showMainPage()">Login</button>
+            <p>Don't have an account? <a href="#registration-page" style="color:#f39c12;">Register here</a></p>
+        </div>
+    </div>
+
+    <!-- Main Content (After Login) -->
+    <div id="main-page" style="display: none;">
+
+        <header>
+            <div class="container">
+                <h1>Environmental Impacts of Pollution on Pollinators</h1>
+                <p><span style="color: rgb(255, 255, 255);">Pollinators play a vital role in food production, but pollution is harming them. Learn more about their decline and how we can help.</span></p>
+                <nav>
+                    <ul>
+                        <li><a href="#introduction">Introduction</a></li>
+                        <li><a href="#pollution">Pollution Types</a></li>
+                        <li><a href="#research">Research Findings</a></li>
+                        <li><a href="#solutions">Solutions</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Introduction -->
+        <section id="introduction" class="content-section">
+            <div class="container">
+                <h2>Introduction: The Importance of Pollinators</h2>
+                <p>Pollinators such as bees, butterflies, and birds are vital to biodiversity and food production. These species ensure the continued existence of a wide range of plant species, including many crops that humans rely on. However, pollution is significantly impacting their populations. Air, water, and soil pollution are contributing to the decline of pollinators, and it’s essential to understand how these forms of pollution affect them. By addressing these issues, we can help protect pollinators for future generations.</p>
+                <img src="/Image1.jpg" alt="Bee Pollinating Flowers">
+            </div>
+        </section>
+
+        <!-- Pollution Types -->
+        <section id="pollution" class="content-section">
+            <div class="container">
+                <h2>Pollution Types and Their Impacts</h2>
+                <h3>Air Pollution</h3>
+                <p>Airborne pollutants like ozone and particulate matter reduce pollinators’ ability to navigate and forage effectively. These pollutants also harm their respiratory systems, weakening them over time.</p>
+                <img src="/Image2.webp" alt="Air Pollution Impact">
+                <h3>Water Pollution</h3>
+                <p>Polluted water sources poison pollinators and degrade their habitats, impacting both aquatic and terrestrial species. Agricultural runoff, which often carries pesticides and heavy metals, is a major contributor.</p>
+                <img src="/Image3.jpg" alt="Water Pollution Impact">
+                <h3>Soil Pollution</h3>
+                <p>Soil contamination from heavy metals and pesticides affects plant health and quality, which in turn affects pollinators’ food sources. Pollinators like bees depend on healthy plants for nectar and pollen.</p>
+                <img src="/Image4.webp" alt="Soil Pollution Impact">
+                <h3>Noise Pollution</h3>
+                <p>Noise pollution disrupts communication among pollinators, particularly species like bees that rely on vibrations for navigation and coordination within their colonies. High levels of noise can also cause stress.</p>
+                <img src="/Image5.jpg" alt="Noise Pollution Impact">
+            </div>
+        </section>
+
+        <!-- Research Findings -->
+        <section id="research" class="content-section">
+            <div class="container">
+                <h2>Research Findings</h2>
+                <p>Recent studies have consistently shown the harmful effects of pollution on pollinators:</p>
+                <ul>
+                    <li>Pesticide exposure, particularly neonicotinoids, can impair memory and navigation abilities in pollinators.</li>
+                    <li>Habitat degradation reduces pollinators' access to necessary resources, such as clean water and food plants.</li>
+                    <li>Pollution in rivers, streams, and ponds poisons aquatic pollinators and disrupts the ecosystems they rely on.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Solutions -->
+        <section id="solutions" class="content-section" style="background-color: #ecf0f1;">
+            <div class="container">
+                <h2>Solutions: Protecting Pollinators</h2>
+                <p>To protect pollinators and reduce pollution, we can take the following actions:</p>
+                <ul>
+                    <li><strong>Reduce Pollution:</strong> Advocate for stronger environmental regulations and reduce pesticide use.</li>
+                    <li><strong>Protect Habitats:</strong> Create pollinator-friendly environments by planting native species and reducing habitat destruction.</li>
+                    <li><strong>Support Conservation Efforts:</strong> Join organizations working to protect pollinators and support scientific research.</li>
+                    <li><strong>Raise Awareness:</strong> Educate the public about the importance of pollinators and the role they play in our ecosystems.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Pollinator Facts Section -->
+        <section id="pollinator-facts" class="content-section">
+            <div class="container">
+                <h2>Did You Know?</h2>
+                <button onclick="generatePollinatorFact()">Generate Pollinator Fact</button>
+                <div id="fact-display">
+                    <p>Click the button to generate a random fact about pollinators!</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2024 Environmental Impacts of Pollution on Pollinators. All rights reserved.</p><br>
+                <p>Developed by Fayas & Team.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Function to show the main page after login
+        function showMainPage() {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('main-page').style.display = 'block';
+        }
+
+        // Pollinator Facts Array
+        const facts = [
+            "Pollinators are responsible for 1 in every 3 bites of food we take.",
+            "Bees visit 5,000 flowers in a single day to collect nectar.",
+            "A single bee can carry up to 70% of its body weight in pollen.",
+            "Some species of butterflies migrate over 2,000 miles!",
+            "Pollinators like bats help to pollinate 500 plant species globally.",
+        ];
+
+        // Generate random fact
+        function generatePollinatorFact() {
+            const randomFact = facts[Math.floor(Math.random() * facts.length)];
+            document.getElementById('fact-display').innerHTML = `<p>${randomFact}</p>`;
+        }
+    </script>
+
+</body>
+
+</html>
